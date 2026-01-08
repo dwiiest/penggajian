@@ -110,7 +110,7 @@
             </div>
             @endif
             
-            <form method="POST" action="{{ route('authenticate') }}">
+            <form method="POST" action="{{ route('login.process') }}">
                 @csrf
                 
                 <div class="mb-3">
@@ -164,7 +164,7 @@
         
         <div class="text-center mt-4">
             <p class="text-white">
-                <small>&copy; 2024 Sistem Penggajian. All rights reserved.</small>
+                <small>&copy; <?= date('Y'); ?> Sistem Penggajian. All rights reserved.</small>
             </p>
         </div>
     </div>

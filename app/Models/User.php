@@ -21,8 +21,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'users_role_id',
-        'status_akun',
+        'user_role_id',
+        'status',
     ];
 
     /**
@@ -46,5 +46,45 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function role()
+    {
+        return $this->belongsTo(UserRole::class, 'user_role_id');
+    }
+
+    public function employee()
+    {
+        return $this->hasOne(Employee::class);
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->where('status', 1);
+    }
+
+    public function isActive()
+    {
+        return $this->status == 1;
+    }
+
+    public function getStatusLabelAttribute()
+    {
+        return $this->status == 1 ? 'Aktif' : 'Nonaktif';
+    }
+
+    public function getStatusBadgeAttribute()
+    {
+        return $this->status == 1 ? 'success' : 'secondary';
+    }
+
+    public function hasRole($roleName)
+    {
+        return $this->role->name === $roleName;
+    }
+
+    public function isEmployee()
+    {
+        return $this->employee !== null;
     }
 }
