@@ -33,6 +33,11 @@ class Employee extends Model
         return $this->hasMany(Payroll::class);
     }
 
+    public function overtimes()
+    {
+        return $this->hasMany(Overtime::class);
+    }
+
     public function getFullInfoAttribute()
     {
         return "{$this->user->name} ({$this->nik})";

@@ -1,9 +1,15 @@
 <?php
 
+use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\AttendanceReportController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserRoleController;
+use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\OvertimeController;
+use App\Http\Controllers\PositionController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/home', function () {
@@ -31,10 +37,32 @@ Route::middleware('auth')->group(function () {
         Route::post('users/{user}/update-password', [UserController::class, 'updatePassword'])->name('users.update-password');
     });
 
+    Route::middleware(['role:admin,hrd'])->group(function () {
+        Route::resource('departments', DepartmentController::class);
+        Route::post('departments/{department}/toggle-status', [DepartmentController::class, 'toggleStatus'])->name('departments.toggle-status');
+
+        Route::resource('positions', PositionController::class);
+        Route::post('positions/{position}/toggle-status', [PositionController::class, 'toggleStatus'])->name('positions.toggle-status');
+    });
+
     // 2. Dashboard HRD
     Route::middleware(['role:hrd'])->prefix('hrd')->name('hrd.')->group(function () {
         Route::get('/', [DashboardController::class, 'hrd'])->name('dashboard');
-   
+
+        Route::resource('employees', EmployeeController::class);
+        
+        Route::resource('attendances', AttendanceController::class);
+        Route::get('attendances-bulk/create', [AttendanceController::class, 'bulkCreate'])->name('attendances.bulk-create');
+        Route::post('attendances-bulk/store', [AttendanceController::class, 'bulkStore'])->name('attendances.bulk-store');
+        
+        Route::resource('overtimes', OvertimeController::class);
+        Route::post('overtimes/{overtime}/approve', [OvertimeController::class, 'approve'])->name('overtimes.approve');
+        Route::post('overtimes/{overtime}/reject', [OvertimeController::class, 'reject'])->name('overtimes.reject');
+        Route::get('overtimes-report', [OvertimeController::class, 'report'])->name('overtimes.report');
+
+        Route::get('reports/attendance', [AttendanceReportController::class, 'index'])->name('reports.attendance');
+        Route::get('reports/attendance/{employee}', [AttendanceReportController::class, 'detail'])->name('reports.attendance-detail');
+        Route::get('reports/attendance/export', [AttendanceReportController::class, 'export'])->name('reports.attendance-export');
     });
     
     // 3. Dashboard Finance

@@ -291,10 +291,7 @@
                         <a class="nav-link" href="#contact">Kontak</a>
                     </li>
                     <li class="nav-item">
-                        <a href="/login" class="btn btn-login">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="btn btn-register">Register</a>
+                        <a href="/" class="btn btn-login">Login</a>
                     </li>
                 </ul>
             </div>

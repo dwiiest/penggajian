@@ -21,153 +21,42 @@
 <!-- Statistics Cards -->
 <div class="row g-4 mb-4">
     <div class="col-xl-3 col-md-6">
-        <div class="stat-card card-primary">
+            <div class="stat-card card-primary">
+            <div class="icon-box">
+                <i class="bi bi-shield-check"></i>
+            </div>
+            <div class="stat-label">Total User Role</div>
+                <div class="stat-value">{{ $rolesCount ?? 0 }}</div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6">
+            <div class="stat-card card-primary">
             <div class="icon-box">
                 <i class="bi bi-people"></i>
             </div>
             <div class="stat-label">Total User</div>
-            <div class="stat-value">245</div>
+                <div class="stat-value">{{ $usersCount ?? 0 }}</div>
         </div>
     </div>
 
     <div class="col-xl-3 col-md-6">
-        <div class="stat-card card-warning">
+            <div class="stat-card card-warning">
             <div class="icon-box">
                 <i class="bi bi-building"></i>
             </div>
             <div class="stat-label">Total Departemen</div>
-            <div class="stat-value">12</div>
+                <div class="stat-value">{{ $departmentsCount ?? 0 }}</div>
         </div>
     </div>
 
     <div class="col-xl-3 col-md-6">
-        <div class="stat-card card-info">
+            <div class="stat-card card-info">
             <div class="icon-box">
                 <i class="bi bi-briefcase"></i>
             </div>
             <div class="stat-label">Total Jabatan</div>
-            <div class="stat-value">28</div>
-        </div>
-    </div>
-</div>
-
-<!-- Charts and Tables -->
-<div class="row g-4">
-    <div class="col-xl-12">
-        <div class="table-card">
-            <div class="card-header d-flex justify-content-between align-items-center">
-                <h5 class="mb-0 fw-bold">
-                    <i class="bi bi-people-fill text-primary me-2"></i>
-                    User Terbaru
-                </h5>
-                <a href="#" class="btn btn-sm btn-primary">
-                    <i class="bi bi-plus-circle me-1"></i> Tambah User
-                </a>
-            </div>
-            <div class="table-responsive">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Nama</th>
-                            <th>Email</th>
-                            <th>Role</th>
-                            <th>Status</th>
-                            <th>Tanggal Dibuat</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <div class="bg-primary bg-opacity-10 rounded-circle p-2 me-2">
-                                        <i class="bi bi-person text-primary"></i>
-                                    </div>
-                                    <span class="fw-semibold">Ahmad Rizki</span>
-                                </div>
-                            </td>
-                            <td>ahmad.rizki@email.com</td>
-                            <td><span class="badge bg-info">Karyawan</span></td>
-                            <td><span class="badge bg-success">Aktif</span></td>
-                            <td>05 Jan 2026</td>
-                            <td>
-                                <button class="btn btn-sm btn-light me-1">
-                                    <i class="bi bi-pencil"></i>
-                                </button>
-                                <button class="btn btn-sm btn-light text-danger">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <div class="bg-primary bg-opacity-10 rounded-circle p-2 me-2">
-                                        <i class="bi bi-person text-primary"></i>
-                                    </div>
-                                    <span class="fw-semibold">Siti Nurhaliza</span>
-                                </div>
-                            </td>
-                            <td>siti.nur@email.com</td>
-                            <td><span class="badge bg-warning">HRD</span></td>
-                            <td><span class="badge bg-success">Aktif</span></td>
-                            <td>04 Jan 2026</td>
-                            <td>
-                                <button class="btn btn-sm btn-light me-1">
-                                    <i class="bi bi-pencil"></i>
-                                </button>
-                                <button class="btn btn-sm btn-light text-danger">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <div class="bg-primary bg-opacity-10 rounded-circle p-2 me-2">
-                                        <i class="bi bi-person text-primary"></i>
-                                    </div>
-                                    <span class="fw-semibold">Budi Santoso</span>
-                                </div>
-                            </td>
-                            <td>budi.santoso@email.com</td>
-                            <td><span class="badge bg-primary">Manager</span></td>
-                            <td><span class="badge bg-success">Aktif</span></td>
-                            <td>03 Jan 2026</td>
-                            <td>
-                                <button class="btn btn-sm btn-light me-1">
-                                    <i class="bi bi-pencil"></i>
-                                </button>
-                                <button class="btn btn-sm btn-light text-danger">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <div class="bg-primary bg-opacity-10 rounded-circle p-2 me-2">
-                                        <i class="bi bi-person text-primary"></i>
-                                    </div>
-                                    <span class="fw-semibold">Dewi Lestari</span>
-                                </div>
-                            </td>
-                            <td>dewi.lestari@email.com</td>
-                            <td><span class="badge bg-success">Finance</span></td>
-                            <td><span class="badge bg-success">Aktif</span></td>
-                            <td>02 Jan 2026</td>
-                            <td>
-                                <button class="btn btn-sm btn-light me-1">
-                                    <i class="bi bi-pencil"></i>
-                                </button>
-                                <button class="btn btn-sm btn-light text-danger">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                <div class="stat-value">{{ $positionsCount ?? 0 }}</div>
         </div>
     </div>
 </div>
@@ -184,27 +73,27 @@
             </div>
             <div class="row g-3">
                 <div class="col-md-3">
-                    <a href="#" class="btn btn-outline-primary w-100 py-3">
+                    <a href="{{ route('admin.user-roles.create') }}" class="btn btn-outline-primary w-100 py-3">
+                        <i class="bi bi-shield-plus d-block fs-2 mb-2"></i>
+                        Tambah User Role
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a href="{{ route('admin.users.create') }}" class="btn btn-outline-success w-100 py-3">
                         <i class="bi bi-person-plus d-block fs-2 mb-2"></i>
                         Tambah User
                     </a>
                 </div>
                 <div class="col-md-3">
-                    <a href="#" class="btn btn-outline-success w-100 py-3">
+                    <a href="{{ route('departments.create') }}" class="btn btn-outline-info w-100 py-3">
                         <i class="bi bi-building d-block fs-2 mb-2"></i>
-                        Kelola Departemen
+                        Tambah Departemen
                     </a>
                 </div>
                 <div class="col-md-3">
-                    <a href="#" class="btn btn-outline-warning w-100 py-3">
+                    <a href="{{ route('positions.create') }}" class="btn btn-outline-warning w-100 py-3">
                         <i class="bi bi-briefcase d-block fs-2 mb-2"></i>
-                        Kelola Jabatan
-                    </a>
-                </div>
-                <div class="col-md-3">
-                    <a href="#" class="btn btn-outline-info w-100 py-3">
-                        <i class="bi bi-gear d-block fs-2 mb-2"></i>
-                        Pengaturan Sistem
+                        Tambah Jabatan
                     </a>
                 </div>
             </div>

@@ -41,12 +41,13 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="nav-link">
-                        <i class="bi bi-building"></i> Data Departemen
+                    <a href="{{ route('departments.index') }}" class="nav-link">
+                        <i class="bi bi-building {{ request()->routeIs('departments.*') ? 'active' : '' }}"></i> Data Departemen
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="nav-link">
+                    <a href="{{ route('positions.index') }}" 
+                    class="nav-link {{ request()->routeIs('positions.*') ? 'active' : '' }}">
                         <i class="bi bi-briefcase"></i> Data Jabatan
                     </a>
                 </li>
@@ -56,30 +57,48 @@
                 <!-- HRD Menu -->
                 <div class="section-title">KEPEGAWAIAN</div>
                 <li>
-                    <a href="#" class="nav-link">
+                    <a href="{{ route('hrd.employees.index') }}" 
+                       class="nav-link {{ request()->routeIs('hrd.employees.*') ? 'active' : '' }}">
                         <i class="bi bi-person-badge"></i> Data Karyawan
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="nav-link">
+                    <a href="{{ route('departments.index') }}" class="nav-link">
+                        <i class="bi bi-building {{ request()->routeIs('departments.*') ? 'active' : '' }}"></i> Data Departemen
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('positions.index') }}" 
+                    class="nav-link {{ request()->routeIs('positions.*') ? 'active' : '' }}">
                         <i class="bi bi-briefcase"></i> Data Jabatan
                     </a>
                 </li>
-                <li>
-                    <a href="#" class="nav-link">
-                        <i class="bi bi-building"></i> Departemen
-                    </a>
-                </li>
                 
-                <div class="section-title">ABSENSI</div>
+                <div class="section-title">ABSENSI & LEMBUR</div>
                 <li>
-                    <a href="#" class="nav-link">
+                    <a href="{{ route('hrd.attendances.index') }}" 
+                       class="nav-link {{ request()->routeIs('hrd.attendances.*') ? 'active' : '' }}">
                         <i class="bi bi-calendar-check"></i> Data Absensi
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="nav-link">
+                    <a href="{{ route('hrd.overtimes.index') }}" 
+                       class="nav-link {{ request()->routeIs('hrd.overtimes.*') && !request()->routeIs('hrd.overtimes.report') ? 'active' : '' }}">
+                        <i class="bi bi-clock-history"></i> Data Lembur
+                    </a>
+                </li>
+                
+                <div class="section-title">LAPORAN</div>
+                <li>
+                    <a href="{{ route('hrd.reports.attendance') }}" 
+                       class="nav-link {{ request()->routeIs('hrd.reports.*') ? 'active' : '' }}">
                         <i class="bi bi-file-earmark-text"></i> Laporan Absensi
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('hrd.overtimes.report') }}" 
+                       class="nav-link {{ request()->routeIs('hrd.overtimes.report') ? 'active' : '' }}">
+                        <i class="bi bi-file-earmark-bar-graph"></i> Laporan Lembur
                     </a>
                 </li>
             @endif
@@ -124,12 +143,12 @@
                         <i class="bi bi-people"></i> Tim Saya
                     </a>
                 </li>
-                <li>
+                {{-- <li>
                     <a href="#" class="nav-link">
                         <i class="bi bi-clipboard-check"></i> Persetujuan Absensi
                     </a>
-                </li>
-                <li>
+                </li> --}}
+                {{-- <li>
                     <a href="#" class="nav-link">
                         <i class="bi bi-graph-up-arrow"></i> Performa Tim
                     </a>
@@ -140,7 +159,7 @@
                     <a href="#" class="nav-link">
                         <i class="bi bi-file-earmark-bar-graph"></i> Laporan Tim
                     </a>
-                </li>
+                </li> --}}
             @endif
 
             @if(Auth::user()->user_role_id == 5)

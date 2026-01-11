@@ -17,7 +17,7 @@ return new class extends Migration
             $table->decimal('base_salary', 15, 2); 
             $table->decimal('transport_allowance', 15, 2)->default(0);
             $table->decimal('meal_allowance', 15, 2)->default(0);
-            
+            $table->integer('status')->nullable()->default(1);
             $table->timestamps();
         });
     }

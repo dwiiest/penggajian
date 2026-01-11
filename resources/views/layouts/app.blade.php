@@ -29,6 +29,7 @@
 
             <!-- Content Area -->
             <div class="content-area">
+                @include('layouts.breadcrumbs')
                 @if(session('success'))
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                         <i class="bi bi-check-circle me-2"></i>
