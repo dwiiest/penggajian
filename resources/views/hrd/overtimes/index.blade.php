@@ -12,9 +12,6 @@
                 <p class="text-muted mb-0">Kelola data lembur dan approval</p>
             </div>
             <div class="d-flex gap-2 flex-wrap">
-                <a href="{{ route('hrd.overtimes.report') }}" class="btn btn-success">
-                    <i class="bi bi-file-earmark-bar-graph me-2"></i>Laporan
-                </a>
                 <a href="{{ route('hrd.overtimes.create') }}" class="btn btn-primary">
                     <i class="bi bi-plus-circle me-2"></i>Tambah Lembur
                 </a>

@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\OvertimeExport;
 use App\Models\Department;
 use App\Models\Overtime;
 use App\Models\Employee;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class OvertimeController extends Controller
 {
@@ -241,5 +243,52 @@ class OvertimeController extends Controller
             'startDate',
             'endDate'
         ));
+    }
+
+    public function exportReport(Request $request)
+    {
+        $month = $request->input('month', now()->format('m'));
+        $year = $request->input('year', now()->format('Y'));
+        $departmentId = $request->input('department');
+
+        $startDate = Carbon::create($year, $month, 1)->startOfMonth();
+        $endDate = Carbon::create($year, $month, 1)->endOfMonth();
+
+        $query = Overtime::with(['employee.user', 'employee.position', 'employee.department'])
+                        ->approved()
+                        ->whereBetween('date', [$startDate, $endDate]);
+
+        if ($departmentId) {
+            $query->whereHas('employee', function($q) use ($departmentId) {
+                $q->where('department_id', $departmentId);
+            });
+        }
+
+        $overtimes = $query->get()->groupBy('employee_id');
+
+        $reportData = [];
+        foreach ($overtimes as $employeeId => $employeeOvertimes) {
+            $employee = $employeeOvertimes->first()->employee;
+            
+            $reportData[] = [
+                'employee' => $employee,
+                'total_overtime' => $employeeOvertimes->count(),
+                'total_hours' => $employeeOvertimes->sum('total_hours'),
+                'total_pay' => $employeeOvertimes->sum('total_pay'),
+            ];
+        }
+
+        $months = [
+            '01' => 'Januari', '02' => 'Februari', '03' => 'Maret',
+            '04' => 'April', '05' => 'Mei', '06' => 'Juni',
+            '07' => 'Juli', '08' => 'Agustus', '09' => 'September',
+            '10' => 'Oktober', '11' => 'November', '12' => 'Desember'
+        ];
+        $monthName = $months[$month] ?? '';
+
+        return Excel::download(
+            new OvertimeExport($reportData, $month, $year),
+            "Laporan-Lembur-{$monthName}-{$year}.xlsx"
+        );
     }
 }

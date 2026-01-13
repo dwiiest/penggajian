@@ -1,20 +1,20 @@
 @extends('layouts.app')
 
-@section('title', 'Laporan Absensi')
-@section('page-title', 'Laporan Absensi')
+@section('title', 'Laporan Lembur')
+@section('page-title', 'Laporan Lembur')
 
 @section('content')
 <div class="row mb-4">
     <div class="col-12">
         <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
             <div>
-                <h4 class="mb-1 fw-bold">Laporan Absensi</h4>
+                <h4 class="mb-1 fw-bold">Laporan Lembur</h4>
                 <p class="text-muted mb-0">
                     Periode: {{ $startDate->format('d F Y') }} - {{ $endDate->format('d F Y') }}
                 </p>
             </div>
             <div class="d-flex gap-2">
-                <a href="{{ route('hrd.reports.attendance.export') }}" class="btn btn-success">
+                <a href="{{ route('hrd.overtimes.report.export') }}" class="btn btn-success">
                     <i class="bi bi-file-earmark-excel me-2"></i>Export Excel
                 </a>
             </div>
@@ -24,69 +24,34 @@
 
 <!-- Overall Statistics -->
 <div class="row g-3 mb-4">
-    <div class="col-6 col-lg">
+    <div class="col-md-4">
         <div class="stat-card card-primary">
-            <div class="d-flex align-items-center">
-                <div class="icon-box me-3">
-                    <i class="bi bi-calendar-check"></i>
-                </div>
-                <div>
-                    <div class="stat-label">Total Absensi</div>
-                    <div class="stat-value">{{ $overallStats['total'] }}</div>
-                </div>
+            <div class="icon-box mb-2">
+                <i class="bi bi-clock-history"></i>
             </div>
+            <div class="stat-label">Total Lembur Disetujui</div>
+            <div class="stat-value">{{ $overallStats['total_overtime'] }}</div>
+            <small class="text-muted">Kali lembur</small>
         </div>
     </div>
-    <div class="col-6 col-lg">
-        <div class="stat-card card-success">
-            <div class="d-flex align-items-center">
-                <div class="icon-box me-3">
-                    <i class="bi bi-check-circle"></i>
-                </div>
-                <div>
-                    <div class="stat-label">Hadir</div>
-                    <div class="stat-value">{{ $overallStats['hadir'] }}</div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-6 col-lg">
+    <div class="col-md-4">
         <div class="stat-card card-warning">
-            <div class="d-flex align-items-center">
-                <div class="icon-box me-3">
-                    <i class="bi bi-clock"></i>
-                </div>
-                <div>
-                    <div class="stat-label">Terlambat</div>
-                    <div class="stat-value">{{ $overallStats['terlambat'] }}</div>
-                </div>
+            <div class="icon-box mb-2">
+                <i class="bi bi-hourglass-split"></i>
             </div>
+            <div class="stat-label">Total Jam Lembur</div>
+            <div class="stat-value">{{ number_format($overallStats['total_hours'], 1) }}</div>
+            <small class="text-muted">Jam</small>
         </div>
     </div>
-    <div class="col-6 col-lg">
-        <div class="stat-card card-info">
-            <div class="d-flex align-items-center">
-                <div class="icon-box me-3">
-                    <i class="bi bi-file-text"></i>
-                </div>
-                <div>
-                    <div class="stat-label">Izin</div>
-                    <div class="stat-value">{{ $overallStats['izin'] }}</div>
-                </div>
+    <div class="col-md-4">
+        <div class="stat-card card-success">
+            <div class="icon-box mb-2">
+                <i class="bi bi-cash-stack"></i>
             </div>
-        </div>
-    </div>
-    <div class="col-6 col-lg">
-        <div class="stat-card card-danger">
-            <div class="d-flex align-items-center">
-                <div class="icon-box me-3">
-                    <i class="bi bi-x-circle"></i>
-                </div>
-                <div>
-                    <div class="stat-label">Alpha</div>
-                    <div class="stat-value">{{ $overallStats['alpha'] }}</div>
-                </div>
-            </div>
+            <div class="stat-label">Total Pembayaran</div>
+            <div class="stat-value" style="font-size: 1.5rem;">Rp {{ number_format($overallStats['total_pay'] / 1000000, 1) }}M</div>
+            <small class="text-muted">Rp {{ number_format($overallStats['total_pay'], 0, ',', '.') }}</small>
         </div>
     </div>
 </div>
@@ -95,7 +60,7 @@
 <div class="row mb-4">
     <div class="col-12">
         <div class="chart-card">
-            <form action="{{ route('hrd.reports.attendance.index') }}" method="GET" class="row g-3">
+            <form action="{{ route('hrd.overtimes.report') }}" method="GET" class="row g-3">
                 <div class="col-md-4">
                     <label class="form-label fw-semibold">Bulan</label>
                     <select class="form-select" name="month">
@@ -149,13 +114,10 @@
                             <th width="5%">No</th>
                             <th width="25%">Karyawan</th>
                             <th width="15%">Departemen</th>
-                            <th width="10%" class="text-center">Total</th>
-                            <th width="8%" class="text-center">Hadir</th>
-                            <th width="8%" class="text-center">Terlambat</th>
-                            <th width="7%" class="text-center">Izin</th>
-                            <th width="7%" class="text-center">Sakit</th>
-                            <th width="7%" class="text-center">Alpha</th>
-                            <th width="8%" class="text-center">Aksi</th>
+                            <th width="10%" class="text-center">Total Lembur</th>
+                            <th width="12%" class="text-center">Total Jam</th>
+                            <th width="12%" class="text-center">Rata-rata/Lembur</th>
+                            <th width="21%" class="text-center">Total Pembayaran</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -179,40 +141,44 @@
                                 <span class="badge bg-success">{{ $data['employee']->department->name }}</span>
                             </td>
                             <td class="text-center">
-                                <span class="badge bg-primary">{{ $data['total_days'] }}</span>
+                                <span class="badge bg-primary fs-6">{{ $data['total_overtime'] }}x</span>
                             </td>
                             <td class="text-center">
-                                <span class="badge bg-success">{{ $data['hadir'] }}</span>
+                                <span class="fw-bold text-warning">{{ number_format($data['total_hours'], 1) }} jam</span>
                             </td>
                             <td class="text-center">
-                                <span class="badge bg-warning">{{ $data['terlambat'] }}</span>
+                                <small class="text-muted">
+                                    {{ $data['total_overtime'] > 0 ? number_format($data['total_hours'] / $data['total_overtime'], 1) : 0 }} jam/lembur
+                                </small>
                             </td>
                             <td class="text-center">
-                                <span class="badge bg-info">{{ $data['izin'] }}</span>
-                            </td>
-                            <td class="text-center">
-                                <span class="badge bg-primary">{{ $data['sakit'] }}</span>
-                            </td>
-                            <td class="text-center">
-                                <span class="badge bg-danger">{{ $data['alpha'] }}</span>
-                            </td>
-                            <td class="text-center">
-                                <a href="{{ route('hrd.reports.attendance.detail', ['employee' => $data['employee']->id, 'month' => $month, 'year' => $year]) }}" 
-                                   class="btn btn-sm btn-primary" 
-                                   title="Lihat Detail">
-                                    <i class="bi bi-eye"></i> Detail
-                                </a>
+                                <span class="fw-bold text-success fs-6">
+                                    Rp {{ number_format($data['total_pay'], 0, ',', '.') }}
+                                </span>
                             </td>
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="10" class="text-center py-5">
+                            <td colspan="7" class="text-center py-5">
                                 <i class="bi bi-inbox fs-1 text-muted"></i>
-                                <p class="text-muted mt-2">Tidak ada data absensi untuk periode ini</p>
+                                <p class="text-muted mt-2">Tidak ada data lembur untuk periode ini</p>
                             </td>
                         </tr>
                         @endforelse
                     </tbody>
+                    @if(count($reportData) > 0)
+                    <tfoot class="table-light">
+                        <tr>
+                            <td colspan="3" class="text-end fw-bold">Total Keseluruhan:</td>
+                            <td class="text-center fw-bold">{{ $overallStats['total_overtime'] }}x</td>
+                            <td class="text-center fw-bold text-warning">{{ number_format($overallStats['total_hours'], 1) }} jam</td>
+                            <td class="text-center">-</td>
+                            <td class="text-center fw-bold text-success fs-5">
+                                Rp {{ number_format($overallStats['total_pay'], 0, ',', '.') }}
+                            </td>
+                        </tr>
+                    </tfoot>
+                    @endif
                 </table>
             </div>
         </div>
@@ -229,26 +195,18 @@
                         <i class="bi bi-info-circle text-primary me-2"></i>
                         Keterangan
                     </h6>
-                    <ul class="list-unstyled">
+                    <ul class="list-unstyled small">
                         <li class="mb-2">
-                            <span class="badge bg-success">Hadir</span>
-                            <small class="ms-2">Karyawan hadir tepat waktu</small>
+                            <i class="bi bi-check-circle text-success me-2"></i>
+                            Laporan ini hanya menampilkan lembur yang sudah <strong>disetujui</strong>
                         </li>
                         <li class="mb-2">
-                            <span class="badge bg-warning">Terlambat</span>
-                            <small class="ms-2">Karyawan hadir terlambat</small>
+                            <i class="bi bi-check-circle text-success me-2"></i>
+                            Total pembayaran belum termasuk pajak dan potongan
                         </li>
                         <li class="mb-2">
-                            <span class="badge bg-info">Izin</span>
-                            <small class="ms-2">Karyawan izin dengan surat</small>
-                        </li>
-                        <li class="mb-2">
-                            <span class="badge bg-primary">Sakit</span>
-                            <small class="ms-2">Karyawan sakit dengan surat</small>
-                        </li>
-                        <li class="mb-2">
-                            <span class="badge bg-danger">Alpha</span>
-                            <small class="ms-2">Tidak hadir tanpa keterangan</small>
+                            <i class="bi bi-check-circle text-success me-2"></i>
+                            Data dapat diexport ke Excel untuk analisis lebih lanjut
                         </li>
                     </ul>
                 </div>
@@ -258,7 +216,7 @@
                         Ringkasan
                     </h6>
                     <div class="mb-2">
-                        <small class="text-muted">Total Karyawan:</small>
+                        <small class="text-muted">Total Karyawan Lembur:</small>
                         <strong class="ms-2">{{ count($reportData) }} Orang</strong>
                     </div>
                     <div class="mb-2">
@@ -266,8 +224,16 @@
                         <strong class="ms-2">{{ $startDate->format('d F') }} - {{ $endDate->format('d F Y') }}</strong>
                     </div>
                     <div class="mb-2">
-                        <small class="text-muted">Total Hari Kerja:</small>
-                        <strong class="ms-2">{{ $totalHariKerja }} Hari</strong>
+                        <small class="text-muted">Rata-rata Jam per Karyawan:</small>
+                        <strong class="ms-2">
+                            {{ count($reportData) > 0 ? number_format($overallStats['total_hours'] / count($reportData), 1) : 0 }} Jam
+                        </strong>
+                    </div>
+                    <div class="mb-2">
+                        <small class="text-muted">Rata-rata Pembayaran per Karyawan:</small>
+                        <strong class="ms-2 text-success">
+                            Rp {{ count($reportData) > 0 ? number_format($overallStats['total_pay'] / count($reportData), 0, ',', '.') : 0 }}
+                        </strong>
                     </div>
                 </div>
             </div>

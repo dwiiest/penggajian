@@ -71,13 +71,15 @@
                             </div>
                         </div>
                     </li>
+                    @if(Auth::user()->employee)
                     <li><hr class="dropdown-divider"></li>
                     <li>
-                        <a class="dropdown-item" href="#">
+                        <a class="dropdown-item" href="{{ route('karyawan.profile') }}">
                             <i class="bi bi-person me-2"></i> Profil Saya
                         </a>
                     </li>
                     <li><hr class="dropdown-divider"></li>
+                    @endif
                     <li>
                         <form action="{{ route('logout') }}" method="POST">
                             @csrf

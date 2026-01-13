@@ -12,9 +12,6 @@
                 <p class="text-muted mb-0">Kelola absensi karyawan</p>
             </div>
             <div class="d-flex gap-2 flex-wrap">
-                <a href="{{ route('hrd.attendances.bulk-create') }}" class="btn btn-success">
-                    <i class="bi bi-calendar-plus me-2"></i>Absensi Massal
-                </a>
                 <a href="{{ route('hrd.attendances.create') }}" class="btn btn-primary">
                     <i class="bi bi-plus-circle me-2"></i>Tambah Absensi
                 </a>

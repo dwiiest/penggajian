@@ -31,13 +31,16 @@
         'employees'     => 'Karyawan',
         'reports'       => 'Laporan',
         'attendances'   => 'Absensi',
+        'overtimes'     => 'Lembur',
+        'reports/attendance' => 'Laporan Lembur',
         
         // Actions
         'create'        => 'Tambah Baru',
         'edit'          => 'Edit Data',
         'show'          => 'Detail',
         'attendance'    => 'Absensi',
-        
+        'approve'       => 'Menyetujui',
+        'reject'        => 'Menolak',
     ];
 
     $breadcrumbs = [];

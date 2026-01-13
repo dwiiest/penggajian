@@ -63,8 +63,9 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('departments.index') }}" class="nav-link">
-                        <i class="bi bi-building {{ request()->routeIs('departments.*') ? 'active' : '' }}"></i> Data Departemen
+                    <a href="{{ route('departments.index') }}" 
+                    class="nav-link {{ request()->routeIs('departments.*') ? 'active' : '' }}">
+                        <i class="bi bi-building"></i> Data Departemen
                     </a>
                 </li>
                 <li>
@@ -90,7 +91,7 @@
                 
                 <div class="section-title">LAPORAN</div>
                 <li>
-                    <a href="{{ route('hrd.reports.attendance') }}" 
+                    <a href="{{ route('hrd.reports.attendance.index') }}" 
                        class="nav-link {{ request()->routeIs('hrd.reports.*') ? 'active' : '' }}">
                         <i class="bi bi-file-earmark-text"></i> Laporan Absensi
                     </a>
@@ -107,11 +108,12 @@
                 <!-- Finance Menu -->
                 <div class="section-title">KEUANGAN</div>
                 <li>
-                    <a href="#" class="nav-link">
-                        <i class="bi bi-cash-stack"></i> Penggajian
+                    <a href="{{ route('finance.payrolls.index') }}" 
+                       class="nav-link {{ request()->routeIs('finance.payrolls.*') ? 'active' : '' }}">
+                        <i class="bi bi-file-earmark-text"></i> Penggajian
                     </a>
                 </li>
-                <li>
+                {{-- <li>
                     <a href="#" class="nav-link">
                         <i class="bi bi-calculator"></i> Tunjangan
                     </a>
@@ -120,19 +122,20 @@
                     <a href="#" class="nav-link">
                         <i class="bi bi-dash-circle"></i> Potongan
                     </a>
-                </li>
+                </li> --}}
                 
                 <div class="section-title">LAPORAN</div>
                 <li>
-                    <a href="#" class="nav-link">
+                    <a href="{{ route('finance.reports.index') }}" 
+                        class="nav-link {{ request()->routeIs('finance.reports.*') ? 'active' : '' }}">
                         <i class="bi bi-file-earmark-spreadsheet"></i> Laporan Gaji
                     </a>
                 </li>
-                <li>
+                {{-- <li>
                     <a href="#" class="nav-link">
                         <i class="bi bi-graph-up"></i> Analisis Keuangan
                     </a>
-                </li>
+                </li> --}}
             @endif
 
             @if(Auth::user()->user_role_id == 4)
@@ -164,32 +167,36 @@
 
             @if(Auth::user()->user_role_id == 5)
                 <!-- Karyawan Menu -->
-                <div class="section-title">MENU SAYA</div>
+                      <div class="section-title">MENU SAYA</div>
                 <li>
-                    <a href="#" class="nav-link">
+                    <a href="{{ route('karyawan.profile') }}" 
+                       class="nav-link {{ request()->routeIs('karyawan.profile') ? 'active' : '' }}">
                         <i class="bi bi-person-circle"></i> Profil Saya
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="nav-link">
-                        <i class="bi bi-fingerprint"></i> Absensi
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="nav-link">
+                    <a href="{{ route('karyawan.attendances') }}" 
+                       class="nav-link {{ request()->routeIs('karyawan.attendances') ? 'active' : '' }}">
                         <i class="bi bi-calendar2-week"></i> Riwayat Absensi
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="nav-link">
-                        <i class="bi bi-receipt"></i> Slip Gaji
+                    <a href="{{ route('karyawan.overtimes') }}" 
+                       class="nav-link {{ request()->routeIs('karyawan.overtimes') ? 'active' : '' }}">
+                        <i class="bi bi-clock-history"></i> Lembur Saya
                     </a>
                 </li>
                 <li>
+                    <a href="{{ route('karyawan.payslips') }}" 
+                       class="nav-link {{ request()->routeIs('karyawan.payslips') ? 'active' : '' }}">
+                        <i class="bi bi-receipt"></i> Slip Gaji
+                    </a>
+                </li>
+                {{-- <li>
                     <a href="#" class="nav-link">
                         <i class="bi bi-clock-history"></i> Cuti & Izin
                     </a>
-                </li>
+                </li> --}}
             @endif
         </ul>
     </div>

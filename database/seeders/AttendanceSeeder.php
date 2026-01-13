@@ -10,7 +10,7 @@ class AttendanceSeeder extends Seeder
     public function run()
     {
         // Ambil ID employee si Budi (biasanya ID 1 karena dia employee pertama yang kita insert)
-        $employee = DB::table('employees')->where('nip', 'EMP2024001')->first();
+        $employee = DB::table('employees')->where('nip', 'EMP2026001')->first();
 
         if ($employee) {
             $attendances = [
@@ -21,6 +21,8 @@ class AttendanceSeeder extends Seeder
                     'time_out' => '17:00:00',
                     'status' => 'hadir',
                     'note' => null,
+                    'created_at' => now(),
+                    'updated_at' => now(),
                 ],
                 [
                     'employee_id' => $employee->id,
@@ -29,6 +31,8 @@ class AttendanceSeeder extends Seeder
                     'time_out' => '17:10:00',
                     'status' => 'hadir',
                     'note' => null,
+                    'created_at' => now(),
+                    'updated_at' => now(),
                 ],
                 [
                     'employee_id' => $employee->id,
@@ -37,6 +41,8 @@ class AttendanceSeeder extends Seeder
                     'time_out' => null,
                     'status' => 'sakit',
                     'note' => 'Demam',
+                    'created_at' => now(),
+                    'updated_at' => now(),
                 ],
             ];
 

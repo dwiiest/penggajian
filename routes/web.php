@@ -8,8 +8,10 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserRoleController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\FinanceController;
 use App\Http\Controllers\OvertimeController;
 use App\Http\Controllers\PositionController;
+use App\Http\Controllers\KaryawanController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/home', function () {
@@ -59,15 +61,41 @@ Route::middleware('auth')->group(function () {
         Route::post('overtimes/{overtime}/approve', [OvertimeController::class, 'approve'])->name('overtimes.approve');
         Route::post('overtimes/{overtime}/reject', [OvertimeController::class, 'reject'])->name('overtimes.reject');
         Route::get('overtimes-report', [OvertimeController::class, 'report'])->name('overtimes.report');
+        Route::get('overtimes-report/export', [OvertimeController::class, 'exportReport'])->name('overtimes.report.export');
+        
+        Route::prefix('reports')->name('reports.')->group(function () {
+            Route::get('attendance', [AttendanceReportController::class, 'index'])
+                ->name('attendance.index');
 
-        Route::get('reports/attendance', [AttendanceReportController::class, 'index'])->name('reports.attendance');
-        Route::get('reports/attendance/{employee}', [AttendanceReportController::class, 'detail'])->name('reports.attendance-detail');
-        Route::get('reports/attendance/export', [AttendanceReportController::class, 'export'])->name('reports.attendance-export');
+            Route::get('attendance/export', [AttendanceReportController::class, 'export'])
+                ->name('attendance.export');
+
+            Route::get('attendance/{employee}', [AttendanceReportController::class, 'detail'])
+                ->name('attendance.detail'); 
+        });
     });
     
     // 3. Dashboard Finance
         Route::middleware(['role:finance'])->prefix('finance')->name('finance.')->group(function () {
-        Route::get('/', [DashboardController::class, 'finance'])->name('dashboard');
+        Route::get('/', [FinanceController::class, 'index'])->name('dashboard');
+        
+        // Payroll Management
+        Route::get('payrolls', [FinanceController::class, 'payrolls'])->name('payrolls.index');
+        Route::get('payrolls/create', [FinanceController::class, 'create'])->name('payrolls.create');
+        Route::post('payrolls/generate', [FinanceController::class, 'generate'])->name('payrolls.generate');
+        Route::get('payrolls/{payroll}', [FinanceController::class, 'show'])->name('payrolls.show');
+        Route::get('payrolls/{payroll}/edit', [FinanceController::class, 'edit'])->name('payrolls.edit');
+        Route::put('payrolls/{payroll}', [FinanceController::class, 'update'])->name('payrolls.update');
+        Route::delete('payrolls/{payroll}', [FinanceController::class, 'destroy'])->name('payrolls.destroy');
+        Route::post('payrolls/{payroll}/pay', [FinanceController::class, 'pay'])->name('payrolls.pay');
+        Route::post('payrolls/bulk-pay', [FinanceController::class, 'bulkPay'])->name('payrolls.bulk-pay');
+        
+        // Export & Download
+        Route::get('payrolls/export/excel', [FinanceController::class, 'export'])->name('payrolls.export');
+        Route::get('payrolls/{payroll}/download-payslip', [FinanceController::class, 'downloadPayslip'])->name('payrolls.download-payslip');
+        
+        // Reports
+        Route::get('reports', [FinanceController::class, 'reports'])->name('reports.index');
     });
 
     // 4. Dashboard Manager
@@ -77,6 +105,14 @@ Route::middleware('auth')->group(function () {
 
     // 5. Dashboard Karyawan
     Route::middleware(['role:karyawan'])->prefix('karyawan')->name('karyawan.')->group(function () {
-        Route::get('/', [DashboardController::class, 'karyawan'])->name('dashboard');
+        Route::get('/', [KaryawanController::class, 'index'])->name('dashboard');
+        Route::get('/profile', [KaryawanController::class, 'profile'])->name('profile');
+        Route::get('/attendances', [KaryawanController::class, 'attendances'])->name('attendances');
+        Route::post('/clock-in', [KaryawanController::class, 'clockIn'])->name('clock-in');
+        Route::post('/clock-out', [KaryawanController::class, 'clockOut'])->name('clock-out');
+        Route::get('/overtimes', [KaryawanController::class, 'overtimes'])->name('overtimes');
+        Route::post('/overtimes/submit', [KaryawanController::class, 'submitOvertime'])->name('overtimes.submit');
+        Route::get('/payslips', [KaryawanController::class, 'payslips'])->name('payslips');
+        Route::get('/payslips/{id}/download', [KaryawanController::class, 'downloadPayslip'])->name('payslips.download');
     });
 });

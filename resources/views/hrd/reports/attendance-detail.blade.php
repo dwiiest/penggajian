@@ -75,9 +75,6 @@
                     </div>
                     <div class="stat-label">Hadir</div>
                     <div class="stat-value">{{ $stats['hadir'] }}</div>
-                    <small class="text-muted">
-                        {{ $stats['total_days'] > 0 ? number_format(($stats['hadir'] / $stats['total_days']) * 100, 1) : 0 }}%
-                    </small>
                 </div>
             </div>
             <div class="col-6 col-md-4">
@@ -87,9 +84,6 @@
                     </div>
                     <div class="stat-label">Terlambat</div>
                     <div class="stat-value">{{ $stats['terlambat'] }}</div>
-                    <small class="text-muted">
-                        {{ $stats['total_days'] > 0 ? number_format(($stats['terlambat'] / $stats['total_days']) * 100, 1) : 0 }}%
-                    </small>
                 </div>
             </div>
             <div class="col-6 col-md-4">
